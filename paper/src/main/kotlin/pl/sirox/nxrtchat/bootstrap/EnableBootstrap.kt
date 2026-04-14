@@ -10,10 +10,13 @@ import pl.sirox.nxrtchat.module.PluginModule
 import pl.sirox.nxrtchat.service.CommandService
 
 class EnableBootstrap @Inject constructor(
-    private val commandService: CommandService
+    private val commandService: CommandService,
+    private val loggerFactory: LoggerFactory
 ) : JavaPlugin() {
 
     private lateinit var injector: Injector
+
+    private val logger = loggerFactory.logger<EnableBootstrap>()
 
     override fun onEnable() {
         try {
@@ -25,7 +28,7 @@ class EnableBootstrap @Inject constructor(
 
             logger.info("Plugin enabled!")
         } catch (e: Exception) {
-
+            logger.error("Failed to enable plugin", e)
         }
     }
 
