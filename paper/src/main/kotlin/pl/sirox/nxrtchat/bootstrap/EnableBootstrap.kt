@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
+import pl.sirox.nxrtchat.module.CommandModule
 import pl.sirox.nxrtchat.module.PluginModule
 import pl.sirox.nxrtchat.service.CommandService
 
@@ -20,7 +21,8 @@ class EnableBootstrap : JavaPlugin() {
     override fun onEnable() {
         try {
             injector = Guice.createInjector(
-                PluginModule(this)
+                PluginModule(this),
+                CommandModule()
             )
 
             loggerFactory = injector.getInstance(LoggerFactory::class.java)
