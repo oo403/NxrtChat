@@ -1,0 +1,4 @@
+name: NxrtChat
+version: '1.0'
+main: pl.sirox.nxrtchat.bootstrap.EnableBootstrap
+api-version: '1.21'
