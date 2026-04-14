@@ -20,15 +20,12 @@ subprojects {
         }
 
         maven("https://repo.panda-lang.org/releases")
+        maven("https://repo.okaeri.cloud/releases")
     }
 
     apply {
         plugin("kotlin")
         plugin("com.gradleup.shadow")
-    }
-
-    dependencies {
-
     }
 
     kotlin {

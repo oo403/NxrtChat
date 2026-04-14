@@ -1,13 +1,13 @@
 package pl.sirox.nxrtchat.bootstrap
 
 import com.google.inject.Guice
-import com.google.inject.Inject
 import com.google.inject.Injector
 import org.bukkit.plugin.java.JavaPlugin
 import org.slf4j.Logger
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
 import pl.sirox.nxrtchat.module.CommandModule
+import pl.sirox.nxrtchat.module.ConfigurationModule
 import pl.sirox.nxrtchat.module.PluginModule
 import pl.sirox.nxrtchat.service.CommandService
 
@@ -22,6 +22,7 @@ class EnableBootstrap : JavaPlugin() {
         try {
             injector = Guice.createInjector(
                 PluginModule(this),
+                ConfigurationModule(dataFolder),
                 CommandModule()
             )
 

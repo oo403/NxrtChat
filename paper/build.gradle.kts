@@ -10,6 +10,8 @@ dependencies {
     implementation("org.reflections:reflections:0.10.2")
 
     implementation("dev.rollczi:litecommands-bukkit:3.10.9")
+
+    implementation(project(":common"))
 }
 
 tasks {
