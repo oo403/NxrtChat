@@ -5,12 +5,14 @@ import dev.rollczi.litecommands.LiteCommands
 import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import org.bukkit.command.CommandSender
 import pl.sirox.nxrtchat.bootstrap.EnableBootstrap
+import pl.sirox.nxrtchat.command.CustomCommand
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
 
 class CommandService @Inject constructor(
     private val loggerFactory: LoggerFactory,
-    private val plugin: EnableBootstrap
+    private val plugin: EnableBootstrap,
+    private val commands: Set<CustomCommand>
 ) {
 
     private lateinit var liteCommands : LiteCommands<CommandSender>
@@ -20,7 +22,9 @@ class CommandService @Inject constructor(
     fun run() {
         try {
             this.liteCommands = LiteBukkitFactory.builder("nxrtchat", plugin)
-                .commands()
+                .commands(
+                    commands
+                )
                 .build()
 
             logger.info("LiteCommands initialized")
