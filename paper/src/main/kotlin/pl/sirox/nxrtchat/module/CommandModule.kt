@@ -9,7 +9,7 @@ class CommandModule : AbstractModule() {
 
     override fun configure() {
 
-        val commands = Reflections("pl.sirox.nxrtchat.command")
+        val commands = Reflections("pl.sirox.nxrtchat.command.commands")
         val commandClasses = commands.getSubTypesOf(CustomCommand::class.java)
 
         val commandBinder = Multibinder.newSetBinder(binder(), CustomCommand::class.java)
