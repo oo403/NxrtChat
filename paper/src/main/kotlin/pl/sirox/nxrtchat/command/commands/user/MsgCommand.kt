@@ -16,7 +16,7 @@ class MsgCommand @Inject constructor(
 ) : CustomCommand {
 
     @Execute
-    fun executeMsg(@Context sender: Player, @Arg target: Player, @Join message: String) {
+    fun executeMsg(@Context sender: Player, @Arg target: Player, @Join("message") message: String) {
         messageService.sendMsg(sender, target, message)
     }
 
