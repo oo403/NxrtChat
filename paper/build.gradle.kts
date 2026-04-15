@@ -11,6 +11,8 @@ dependencies {
 
     implementation("dev.rollczi:litecommands-bukkit:3.10.9")
 
+    implementation("eu.okaeri:okaeri-configs-yaml-bukkit:6.1.0-beta.1")
+
     implementation(project(":common"))
 }
 

@@ -9,4 +9,8 @@ class LoggerFactory {
         return LoggerFactory.getLogger(clazz)
     }
 
+    fun get(name: String) : Logger {
+        return LoggerFactory.getLogger(name)
+    }
+
 }
