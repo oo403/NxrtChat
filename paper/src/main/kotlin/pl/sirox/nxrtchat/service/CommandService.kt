@@ -6,13 +6,16 @@ import dev.rollczi.litecommands.bukkit.LiteBukkitFactory
 import org.bukkit.command.CommandSender
 import pl.sirox.nxrtchat.bootstrap.EnableBootstrap
 import pl.sirox.nxrtchat.command.CustomCommand
+import pl.sirox.nxrtchat.command.handler.InvalidUsageHandler
+import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
 
 class CommandService @Inject constructor(
     private val loggerFactory: LoggerFactory,
     private val plugin: EnableBootstrap,
-    private val commands: Set<CustomCommand>
+    private val commands: Set<CustomCommand>,
+    private val messageConfiguration: MessageConfiguration
 ) {
 
     private lateinit var liteCommands : LiteCommands<CommandSender>
@@ -25,6 +28,7 @@ class CommandService @Inject constructor(
                 .commands(
                     commands
                 )
+                .invalidUsage(InvalidUsageHandler(messageConfiguration))
                 .build()
 
             logger.info("LiteCommands initialized")
