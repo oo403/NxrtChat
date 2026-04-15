@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender
 import pl.sirox.nxrtchat.bootstrap.EnableBootstrap
 import pl.sirox.nxrtchat.command.CustomCommand
 import pl.sirox.nxrtchat.command.handler.InvalidUsageHandler
+import pl.sirox.nxrtchat.command.handler.MissingPermissionHandler
 import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
@@ -29,6 +30,7 @@ class CommandService @Inject constructor(
                     commands
                 )
                 .invalidUsage(InvalidUsageHandler(messageConfiguration))
+                .missingPermission(MissingPermissionHandler(messageConfiguration))
                 .build()
 
             logger.info("LiteCommands initialized")

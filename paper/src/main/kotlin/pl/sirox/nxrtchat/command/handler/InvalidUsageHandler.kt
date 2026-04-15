@@ -25,4 +25,5 @@ class InvalidUsageHandler @Inject constructor(
 
         sender?.sendMessage(formattedMessage)
     }
+
 }
