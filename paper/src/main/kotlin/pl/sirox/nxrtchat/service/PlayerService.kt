@@ -1,7 +1,9 @@
 package pl.sirox.nxrtchat.service
 
+import com.google.inject.Singleton
 import java.util.UUID
 
+@Singleton
 class PlayerService {
 
     private val lastMsg = mutableMapOf<UUID, UUID>()
