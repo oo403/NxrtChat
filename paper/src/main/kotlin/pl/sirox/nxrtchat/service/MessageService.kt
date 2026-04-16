@@ -10,7 +10,8 @@ import pl.sirox.nxrtchat.logging.logger
 
 class MessageService @Inject constructor(
     private val messageConfiguration: MessageConfiguration,
-    private val loggerFactory: LoggerFactory
+    private val loggerFactory: LoggerFactory,
+    private val playerService: PlayerService
 ){
 
     fun sendMsg(sender: Player, target: Player, message: String) {
@@ -43,6 +44,7 @@ class MessageService @Inject constructor(
         val logger = loggerFactory.logger<MessageService>("MSG")
         logger.info(consoleFormattedMessage)
 
+        playerService.setLastMsg(sender.uniqueId, target.uniqueId)
     }
 
 }
