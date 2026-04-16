@@ -20,7 +20,7 @@ class InvalidUsageHandler @Inject constructor(
     ) {
         val sender = invocation?.sender()
 
-        val message = messageConfiguration.msg["invalid-usage"]?.format ?: "Invalid usage!"
+        val message = messageConfiguration.invalidUsage
         val formattedMessage = MiniMessage.miniMessage().deserialize(message)
 
         sender?.sendMessage(formattedMessage)

@@ -22,7 +22,7 @@ class MissingPermissionHandler @Inject constructor(
         val sender = invocation?.sender()
         val permissions = missingPermissions?.asJoinedText() ?: ""
 
-        val message = messageConfiguration.msg["missing-permission"]?.format ?: "Missing permission!"
+        val message = messageConfiguration.missingPermission
         val formattedMessage = MiniMessage.miniMessage().deserialize(message,
             Placeholder.unparsed("permissions", permissions))
 
