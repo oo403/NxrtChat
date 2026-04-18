@@ -38,7 +38,7 @@ class CommandService @Inject constructor(
                 .invalidUsage(InvalidUsageHandler(messageConfiguration))
                 .missingPermission(MissingPermissionHandler(messageConfiguration))
                 .message(LiteBukkitMessages.PLAYER_NOT_FOUND, MiniMessage.miniMessage().deserialize(messageConfiguration.playerNotFound))
-                .extension(LiteAdventureExtension<CommandSender>()) {
+                .extension(LiteAdventureExtension()) {
                     it.miniMessage(true)
                     it.legacyColor(true)
                     it.serializer(this.miniMessage)
