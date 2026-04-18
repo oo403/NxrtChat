@@ -8,13 +8,16 @@ import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
 import pl.sirox.nxrtchat.module.CommandModule
 import pl.sirox.nxrtchat.module.ConfigurationModule
+import pl.sirox.nxrtchat.module.EventModule
 import pl.sirox.nxrtchat.module.PluginModule
 import pl.sirox.nxrtchat.service.CommandService
+import pl.sirox.nxrtchat.service.EventService
 
 class EnableBootstrap : JavaPlugin() {
 
     private lateinit var injector: Injector
     private lateinit var commandService: CommandService
+    private lateinit var eventService: EventService
     private lateinit var loggerFactory: LoggerFactory
     private lateinit var logger: Logger
 
@@ -23,7 +26,8 @@ class EnableBootstrap : JavaPlugin() {
             injector = Guice.createInjector(
                 PluginModule(this),
                 ConfigurationModule(dataFolder),
-                CommandModule()
+                CommandModule(),
+                EventModule()
             )
 
             loggerFactory = injector.getInstance(LoggerFactory::class.java)
@@ -31,6 +35,9 @@ class EnableBootstrap : JavaPlugin() {
 
             commandService = injector.getInstance(CommandService::class.java)
             commandService.run()
+
+            eventService = injector.getInstance(EventService::class.java)
+            eventService.run()
 
             logger.info("Plugin enabled!")
         } catch (e: Exception) {
