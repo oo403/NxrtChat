@@ -12,6 +12,7 @@ import pl.sirox.nxrtchat.module.EventModule
 import pl.sirox.nxrtchat.module.PluginModule
 import pl.sirox.nxrtchat.service.CommandService
 import pl.sirox.nxrtchat.service.EventService
+import pl.sirox.nxrtchat.service.PermissionService
 
 class EnableBootstrap : JavaPlugin() {
 
@@ -20,6 +21,7 @@ class EnableBootstrap : JavaPlugin() {
     private lateinit var eventService: EventService
     private lateinit var loggerFactory: LoggerFactory
     private lateinit var logger: Logger
+    private lateinit var permissionService: PermissionService
 
     override fun onEnable() {
         try {
@@ -38,6 +40,12 @@ class EnableBootstrap : JavaPlugin() {
 
             eventService = injector.getInstance(EventService::class.java)
             eventService.run()
+
+            permissionService = injector.getInstance(PermissionService::class.java)
+
+            if (!permissionService.isLuckPermsInitialized()) {
+                logger.warn("LuckPerms is not installed!")
+            }
 
             logger.info("Plugin enabled!")
         } catch (e: Exception) {

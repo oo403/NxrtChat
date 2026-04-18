@@ -12,12 +12,14 @@ import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.event.CustomEvent
 import pl.sirox.nxrtchat.regex.Regexes
 import pl.sirox.nxrtchat.service.MessageService
+import pl.sirox.nxrtchat.service.PermissionService
 
 class ChatEvent @Inject constructor(
     private val plugin: EnableBootstrap,
     private val messageService: MessageService,
     private val messageConfiguration: MessageConfiguration,
-    private val generalConfiguration: GeneralConfiguration
+    private val generalConfiguration: GeneralConfiguration,
+    private val permissionService: PermissionService
 ) : CustomEvent {
 
     private val mentionRegex = Regexes.MENTION_REGEX
@@ -51,9 +53,15 @@ class ChatEvent @Inject constructor(
             }
         )
 
+        val format = if (permissionService.isLuckPermsInitialized() && generalConfiguration.format == "ranks") {
+            generalConfiguration.ranksFormat[permissionService.getPlayerRank(player)]?.format ?: generalConfiguration.globalFormat
+        } else {
+            generalConfiguration.globalFormat
+        }
+
         event.renderer { _, _, message, _ ->
             mini.deserialize(
-                generalConfiguration.globalFormat,
+                format,
                 Placeholder.component("message", message),
                 Placeholder.unparsed("player", player.name)
             )

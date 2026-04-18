@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.21.11-R0.1-SNAPSHOT")
+    compileOnly("net.luckperms:api:5.5")
 
     implementation("com.google.inject:guice:7.0.0")
     implementation("org.reflections:reflections:0.10.2")
