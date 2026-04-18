@@ -1,18 +1,24 @@
 package pl.sirox.nxrtchat.service
 
 import com.google.inject.Inject
+import net.kyori.adventure.key.Key
+import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import org.bukkit.entity.Player
+import pl.sirox.nxrtchat.configuration.GeneralConfiguration
 import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.logging.LoggerFactory
 import pl.sirox.nxrtchat.logging.logger
 
 class MessageService @Inject constructor(
     private val messageConfiguration: MessageConfiguration,
+    private val generalConfiguration: GeneralConfiguration,
     private val loggerFactory: LoggerFactory,
     private val playerService: PlayerService
 ){
+
+    private val logger = loggerFactory.logger<MessageService>()
 
     fun sendMsg(sender: Player, target: Player, message: String) {
         val senderName = sender.name
@@ -45,6 +51,23 @@ class MessageService @Inject constructor(
         logger.info(consoleFormattedMessage)
 
         playerService.setLastMsg(sender.uniqueId, target.uniqueId)
+    }
+
+    fun mention(target: Player) {
+        val soundKey = generalConfiguration.mentionSound.split(":")
+
+        if (soundKey.size != 2) {
+            logger.error("Mention sound is not valid!")
+            return
+        }
+
+        val sound: Sound = if (soundKey[0] == "minecraft") {
+            Sound.sound(Key.key(soundKey[1]), Sound.Source.MASTER, 1.0f, 1.0f)
+        } else {
+            Sound.sound(Key.key(soundKey[0], soundKey[1]), Sound.Source.MASTER, 1.0f, 1.0f)
+        }
+
+        target.playSound(sound)
     }
 
 }
