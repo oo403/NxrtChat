@@ -21,6 +21,11 @@ tasks {
     shadowJar {
         archiveFileName.set("NxtrChat-${project.version}.jar")
         destinationDirectory.set(file("$buildDir/libs"))
+
+        relocate("dev.rollczi.litecommands", "pl.sirox.nxrtchat.libs.commands")
+        relocate("eu.okaeri.configs", "pl.sirox.nxrtchat.libs.configs")
+        relocate("com.google.inject", "pl.sirox.nxrtchat.libs.guice")
+        relocate("org.reflections", "pl.sirox.nxrtchat.libs.reflections")
     }
 
     runServer {
