@@ -6,6 +6,7 @@ class MessageConfiguration : OkaeriConfig() {
 
     var invalidUsage: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Invalid usage!"
     var missingPermission: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Missing permission! ( <permissions> )"
+    var playerNotFound: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Player not found!"
     var lastMessageNotFound: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Last message not found!"
     var configReloadSuccess: String = "<#AAAAAA>[<#5DF083>✔<#AAAAAA>] Config reloaded successfully!"
     var configReloadFailed: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Config reload failed!"

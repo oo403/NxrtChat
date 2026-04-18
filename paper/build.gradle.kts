@@ -10,6 +10,7 @@ dependencies {
     implementation("org.reflections:reflections:0.10.2")
 
     implementation("dev.rollczi:litecommands-bukkit:3.10.9")
+    implementation("dev.rollczi:litecommands-adventure:3.10.9")
 
     implementation("eu.okaeri:okaeri-configs-yaml-bukkit:6.1.0-beta.1")
 
