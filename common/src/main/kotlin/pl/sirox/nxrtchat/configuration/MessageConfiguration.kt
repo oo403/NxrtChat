@@ -17,6 +17,8 @@ class MessageConfiguration : OkaeriConfig() {
     var configReloadSuccess: String = "<#AAAAAA>[<#5DF083>✔<#AAAAAA>] Config reloaded successfully!"
     @Comment("","Config reload failed message")
     var configReloadFailed: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Config reload failed!"
+    @Comment("","Nothing in hand message")
+    var nothingInHand: String = "<#AAAAAA>[<#F03C3C>✘<#AAAAAA>] Nothing in hand!"
 
     @Comment("","Msg format")
     var msg: MutableMap<String, Msg> = mutableMapOf(

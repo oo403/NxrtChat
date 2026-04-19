@@ -5,6 +5,7 @@ import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
+import org.bukkit.Material
 import org.bukkit.event.EventHandler
 import pl.sirox.nxrtchat.bootstrap.EnableBootstrap
 import pl.sirox.nxrtchat.configuration.GeneralConfiguration
@@ -30,27 +31,50 @@ class ChatEvent @Inject constructor(
         val mini = MiniMessage.miniMessage()
 
         event.message(
-            event.message().replaceText { builder ->
-                builder.match(mentionRegex)
+            event.message()
+                .replaceText { builder ->
+                    builder.match(mentionRegex)
 
-                builder.replacement { match, _ ->
-                    val fullMatch = match.group()
-                    val targetName = fullMatch.substring(1)
+                    builder.replacement { match, _ ->
+                        val fullMatch = match.group()
+                        val targetName = fullMatch.substring(1)
 
-                    val target = plugin.server.getPlayer(targetName)
+                        val target = plugin.server.getPlayer(targetName)
 
-                    if (target != null) {
-                        messageService.mention(target)
+                        if (target != null) {
+                            messageService.mention(target)
 
-                        mini.deserialize(
-                            generalConfiguration.mentionFormat,
-                            Placeholder.unparsed("player", target.name)
-                        )
-                    } else {
-                        Component.text(fullMatch)
+                            mini.deserialize(
+                                generalConfiguration.mentionFormat,
+                                Placeholder.parsed("player", target.name)
+                            )
+                        } else {
+                            Component.text(fullMatch)
+                        }
                     }
                 }
-            }
+
+                .replaceText { builder ->
+                    builder.match(Regex(Regex.escape(generalConfiguration.itemPlaceholder), RegexOption.IGNORE_CASE).toPattern())
+
+                    val item = player.inventory.itemInMainHand
+
+                    builder.replacement { match, _ ->
+                        if (generalConfiguration.itemShareFeature) {
+                            if (player.inventory.itemInMainHand.type != Material.AIR) {
+                                mini.deserialize(
+                                    generalConfiguration.itemFormat,
+                                    Placeholder.parsed("item", MiniMessage.miniMessage().serialize(item.displayName().hoverEvent(item.asHoverEvent())))
+                                )
+                            } else {
+                                player.sendMessage(MiniMessage.miniMessage().deserialize(messageConfiguration.nothingInHand))
+                                Component.text(match.group())
+                            }
+                        } else {
+                            Component.text(match.group())
+                        }
+                    }
+                }
         )
 
         val format = if (permissionService.isLuckPermsInitialized() && generalConfiguration.format == "ranks") {
@@ -63,7 +87,7 @@ class ChatEvent @Inject constructor(
             mini.deserialize(
                 format,
                 Placeholder.component("message", message),
-                Placeholder.unparsed("player", player.name)
+                Placeholder.parsed("player", player.name)
             )
         }
     }

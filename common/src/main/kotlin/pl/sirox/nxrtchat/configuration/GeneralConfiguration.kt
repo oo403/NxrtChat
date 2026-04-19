@@ -28,4 +28,11 @@ class GeneralConfiguration : OkaeriConfig() {
     @Comment("","Format to use for mentions")
     var mentionFormat: String = "<green>@<player>"
 
+    @Comment("","Enable item sharing function")
+    var itemShareFeature: Boolean = true
+    @Comment("","Placeholder for an item")
+    var itemPlaceholder: String = "[ITEM]"
+    @Comment("","Format to use for item", "Available placeholders: <item>")
+    var itemFormat = "<item>"
+
 }
