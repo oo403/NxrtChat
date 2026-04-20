@@ -15,7 +15,6 @@ import pl.sirox.nxrtchat.configuration.GeneralConfiguration
 import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.event.CustomEvent
 import pl.sirox.nxrtchat.regex.Regexes
-import pl.sirox.nxrtchat.service.InventoryService
 import pl.sirox.nxrtchat.service.MessageService
 import pl.sirox.nxrtchat.service.PermissionService
 
