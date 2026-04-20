@@ -21,6 +21,7 @@ subprojects {
 
         maven("https://repo.panda-lang.org/releases")
         maven("https://repo.okaeri.cloud/releases")
+        maven("https://repo.xenondevs.xyz/releases")
     }
 
     apply {

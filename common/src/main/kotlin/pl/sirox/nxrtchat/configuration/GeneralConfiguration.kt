@@ -35,4 +35,22 @@ class GeneralConfiguration : OkaeriConfig() {
     @Comment("","Format to use for item", "Available placeholders: <item>")
     var itemFormat = "<item>"
 
+    @Comment("","Enable inventory sharing function")
+    var invShareFeature: Boolean = true
+    @Comment("","Placeholder for an inventory")
+    var invPlaceholder: String = "[INV]"
+    @Comment("","Format to use for inventory")
+    var invFormat: String = "<green>[INV]"
+    @Comment("","How many times can player use inventory share placeholder")
+    var invUses: Int = 10
+
+    @Comment("","Enable enderchest sharing function")
+    var ecShareFeature: Boolean = true
+    @Comment("","Placeholder for an enderchest")
+    var ecPlaceholder: String = "[EC]"
+    @Comment("","Format to use for enderchest")
+    var ecFormat: String = "<green>[EC]"
+    @Comment("","How many times can player use enderchest share placeholder")
+    var ecUses: Int = 10
+
 }

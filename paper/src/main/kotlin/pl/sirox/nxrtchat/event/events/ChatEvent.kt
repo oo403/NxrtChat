@@ -3,15 +3,19 @@ package pl.sirox.nxrtchat.event.events
 import com.google.inject.Inject
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickCallback
+import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import pl.sirox.nxrtchat.bootstrap.EnableBootstrap
 import pl.sirox.nxrtchat.configuration.GeneralConfiguration
 import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.event.CustomEvent
 import pl.sirox.nxrtchat.regex.Regexes
+import pl.sirox.nxrtchat.service.InventoryService
 import pl.sirox.nxrtchat.service.MessageService
 import pl.sirox.nxrtchat.service.PermissionService
 
@@ -20,7 +24,8 @@ class ChatEvent @Inject constructor(
     private val messageService: MessageService,
     private val messageConfiguration: MessageConfiguration,
     private val generalConfiguration: GeneralConfiguration,
-    private val permissionService: PermissionService
+    private val permissionService: PermissionService,
+    private val inventoryService: InventoryService
 ) : CustomEvent {
 
     private val mentionRegex = Regexes.MENTION_REGEX
@@ -70,6 +75,42 @@ class ChatEvent @Inject constructor(
                                 player.sendMessage(MiniMessage.miniMessage().deserialize(messageConfiguration.nothingInHand))
                                 Component.text(match.group())
                             }
+                        } else {
+                            Component.text(match.group())
+                        }
+                    }
+                }
+
+                .replaceText { builder ->
+                    builder.match(Regex(Regex.escape(generalConfiguration.invPlaceholder), RegexOption.IGNORE_CASE).toPattern())
+
+                    builder.replacement { match, _ ->
+                        if (generalConfiguration.invShareFeature) {
+                            mini.deserialize(
+                                generalConfiguration.invFormat
+                            ).clickEvent((ClickEvent.callback({ audience ->
+                                if (audience is Player && player.uniqueId != audience.uniqueId) {
+                                    inventoryService.openPlayerInventory(player, audience)
+                                }
+                            }, ClickCallback.Options.builder().uses(generalConfiguration.invUses).build())))
+                        } else {
+                            Component.text(match.group())
+                        }
+                    }
+                }
+
+                .replaceText { builder ->
+                    builder.match(Regex(Regex.escape(generalConfiguration.ecPlaceholder), RegexOption.IGNORE_CASE).toPattern())
+
+                    builder.replacement { match, _ ->
+                        if (generalConfiguration.ecShareFeature) {
+                            mini.deserialize(
+                                generalConfiguration.ecFormat
+                            ).clickEvent((ClickEvent.callback({ audience ->
+                                if (audience is Player && player.uniqueId != audience.uniqueId) {
+                                    inventoryService.openEnderChestInventory(player, audience)
+                                }
+                            }, ClickCallback.Options.builder().uses(generalConfiguration.ecUses).build())))
                         } else {
                             Component.text(match.group())
                         }
