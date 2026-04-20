@@ -54,10 +54,10 @@ class InventoryService {
         val enderChest = ReferencingInventory.fromStorageContents(sender.enderChest).items
         val enderChestStorage = enderChest.copyOfRange(0, 27)
 
-        val storage = VirtualInventory(27)
+        val enderChestInventory = VirtualInventory(27)
 
         enderChestStorage.forEachIndexed { index, itemStack ->
-            storage.setItem(UpdateReason.SUPPRESSED, index, itemStack)
+            enderChestInventory.setItem(UpdateReason.SUPPRESSED, index, itemStack)
         }
 
 
@@ -67,7 +67,7 @@ class InventoryService {
                 "I I I I I I I I I",
                 "I I I I I I I I I"
             )
-            .addIngredient('I', storage)
+            .addIngredient('I', enderChestInventory)
 
         val window = Window.single()
             .setGui(upperGui)
