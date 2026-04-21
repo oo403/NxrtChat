@@ -37,6 +37,8 @@ class GeneralConfiguration : OkaeriConfig() {
 
     @Comment("","Enable inventory sharing function")
     var invShareFeature: Boolean = true
+    @Comment("","Title of inventory sharing", "Available placeholders: <player>")
+    var invShareTitle: String = "Inventory of <player>"
     @Comment("","Placeholder for an inventory")
     var invPlaceholder: String = "[INV]"
     @Comment("","Format to use for inventory")
@@ -46,6 +48,8 @@ class GeneralConfiguration : OkaeriConfig() {
 
     @Comment("","Enable enderchest sharing function")
     var ecShareFeature: Boolean = true
+    @Comment("","Title of enderchest sharing", "Available placeholders: <player>")
+    var ecShareTitle: String = "Enderchest of <player>"
     @Comment("","Placeholder for an enderchest")
     var ecPlaceholder: String = "[EC]"
     @Comment("","Format to use for enderchest")

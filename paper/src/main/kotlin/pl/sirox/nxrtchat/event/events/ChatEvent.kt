@@ -15,6 +15,7 @@ import pl.sirox.nxrtchat.configuration.GeneralConfiguration
 import pl.sirox.nxrtchat.configuration.MessageConfiguration
 import pl.sirox.nxrtchat.event.CustomEvent
 import pl.sirox.nxrtchat.regex.Regexes
+import pl.sirox.nxrtchat.service.InventoryService
 import pl.sirox.nxrtchat.service.MessageService
 import pl.sirox.nxrtchat.service.PermissionService
 
@@ -89,7 +90,7 @@ class ChatEvent @Inject constructor(
                                 generalConfiguration.invFormat
                             ).clickEvent((ClickEvent.callback({ audience ->
                                 if (audience is Player && player.uniqueId != audience.uniqueId) {
-                                    inventoryService.openPlayerInventory(player, audience)
+                                    inventoryService.openPlayerShareInventory(player, audience)
                                 }
                             }, ClickCallback.Options.builder().uses(generalConfiguration.invUses).build())))
                         } else {
@@ -107,7 +108,7 @@ class ChatEvent @Inject constructor(
                                 generalConfiguration.ecFormat
                             ).clickEvent((ClickEvent.callback({ audience ->
                                 if (audience is Player && player.uniqueId != audience.uniqueId) {
-                                    inventoryService.openEnderChestInventory(player, audience)
+                                    inventoryService.openPlayerShareEnderChest(player, audience)
                                 }
                             }, ClickCallback.Options.builder().uses(generalConfiguration.ecUses).build())))
                         } else {

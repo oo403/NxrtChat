@@ -13,6 +13,8 @@ dependencies {
     implementation("dev.rollczi:litecommands-bukkit:3.10.9")
     implementation("dev.rollczi:litecommands-adventure:3.10.9")
 
+    implementation("dev.triumphteam:triumph-gui:3.1.13")
+
     implementation("eu.okaeri:okaeri-configs-yaml-bukkit:6.1.0-beta.1")
 
     implementation(project(":common"))
@@ -27,6 +29,7 @@ tasks {
         relocate("eu.okaeri.configs", "pl.sirox.nxrtchat.libs.configs")
         relocate("com.google.inject", "pl.sirox.nxrtchat.libs.guice")
         relocate("org.reflections", "pl.sirox.nxrtchat.libs.reflections")
+        relocate("dev.triumphteam.gui", "pl.sirox.nxrtchat.libs.gui")
     }
 
     runServer {
