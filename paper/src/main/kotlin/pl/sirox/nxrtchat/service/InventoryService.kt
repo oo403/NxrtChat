@@ -3,9 +3,9 @@ package pl.sirox.nxrtchat.service
 import com.google.inject.Inject
 import dev.triumphteam.gui.builder.item.ItemBuilder
 import dev.triumphteam.gui.guis.Gui
-import dev.triumphteam.gui.guis.GuiItem
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder
+import org.bukkit.block.ShulkerBox
 import org.bukkit.entity.Player
 import pl.sirox.nxrtchat.configuration.GeneralConfiguration
 
@@ -13,15 +13,23 @@ class InventoryService @Inject constructor(
     private val generalConfiguration: GeneralConfiguration
 ) {
 
-    fun openPlayerShareInventory(sender: Player, target: Player) {
+    fun buildInventory(sender: Player, target: Player, title: String, rows: Int, click: Boolean): Gui {
         val gui = Gui.gui()
-            .title(MiniMessage.miniMessage().deserialize(generalConfiguration.invShareTitle, Placeholder.unparsed("player", sender.name)))
-            .rows(4)
+            .title(MiniMessage.miniMessage().deserialize(title, Placeholder.unparsed("player", sender.name)))
+            .rows(rows)
             .create()
 
-        gui.setDefaultClickAction {
-            it.isCancelled = true
+        if (click) {
+            gui.setDefaultClickAction {
+                it.isCancelled = true
+            }
         }
+
+        return gui
+    }
+
+    fun openPlayerShareInventory(sender: Player, target: Player) {
+        val gui = buildInventory(sender, target, generalConfiguration.invShareTitle, 4, false)
 
         val items = sender.inventory.contents
 
@@ -36,14 +44,7 @@ class InventoryService @Inject constructor(
     }
 
     fun openPlayerShareEnderChest(sender: Player, target: Player) {
-        val gui = Gui.gui()
-            .title(MiniMessage.miniMessage().deserialize(generalConfiguration.ecShareTitle, Placeholder.unparsed("player", sender.name)))
-            .rows(4)
-            .create()
-
-        gui.setDefaultClickAction {
-            it.isCancelled = true
-        }
+        val gui = buildInventory(sender, target, generalConfiguration.ecShareTitle, 4, false)
 
         val items = sender.enderChest.contents
 
